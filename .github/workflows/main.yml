@@ -10,20 +10,20 @@ on:
 jobs:
   ingress-nginx:
     name: "Deploy ingress-nginx"
-    uses: ./.github/workflows/actions/actions.yml
+    uses: ./.github/workflows/actions.yml
     with:
         PLAYBOOK: "ingress-nginx.yml"
 
   cert-manager:
     name: "Deploy cert-manager"
-    uses: ./.github/workflows/actions/actions.yml
+    uses: ./.github/workflows/actions.yml
     with:
         PLAYBOOK: "cert-manager.yml"
 
   clusterissuer-grafana:
     name: "Deploy clusterissuer-grafana"
     needs: cert-manager
-    uses: ./.github/workflows/actions/actions.yml
+    uses: ./.github/workflows/actions.yml
     with:
         PLAYBOOK: "clusterissuer.yml"
         APP_HOST: ${{ vars.GRAFANA_HOST }}
@@ -34,7 +34,7 @@ jobs:
   grafana:
     name: "Deploy grafana"
     needs: clusterissuer-grafana
-    uses: ./.github/workflows/actions/actions.yml
+    uses: ./.github/workflows/actions.yml
     with:
         APP_HOST: ${{ vars.GRAFANA_HOST }}
         APP_NAMESPACE: ${{ vars.GRAFANA_NAMESPACE }}
