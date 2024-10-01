@@ -13,12 +13,16 @@ jobs:
     uses: ./.github/workflows/actions.yml
     with:
         PLAYBOOK: "ingress-nginx.yml"
+    secrets:
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
   cert-manager:
     name: "Deploy cert-manager"
     uses: ./.github/workflows/actions.yml
     with:
         PLAYBOOK: "cert-manager.yml"
+    secrets:
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
   clusterissuer-grafana:
     name: "Deploy clusterissuer-grafana"
@@ -30,6 +34,8 @@ jobs:
         APP_NAMESPACE: ${{ vars.GRAFANA_NAMESPACE }}
         NAME_CLUSTERISSUER: "grafissuer"
         CHART_PATH: ${{ github.workspace }}/clusterissuer
+    secrets:
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
   grafana:
     name: "Deploy grafana"
@@ -41,3 +47,4 @@ jobs:
         PLAYBOOK: "defectdojo.yml"
     secrets:
         USER_PASSWORD: ${{ secrets.GRAFANA_PASSWORD }}
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}

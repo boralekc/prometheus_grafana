@@ -21,6 +21,8 @@ on:
     secrets:
       USER_PASSWORD:
         required: false
+      DIGITALOCEAN_ACCESS_TOKEN:
+        required: false
 
 jobs:
   deploy:
