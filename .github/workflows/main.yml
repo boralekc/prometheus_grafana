@@ -44,7 +44,7 @@ jobs:
     with:
         APP_HOST: ${{ vars.GRAFANA_HOST }}
         APP_NAMESPACE: ${{ vars.GRAFANA_NAMESPACE }}
-        PLAYBOOK: "defectdojo.yml"
+        PLAYBOOK: "prom-grafana.yml"
     secrets:
         USER_PASSWORD: ${{ secrets.GRAFANA_PASSWORD }}
         DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
