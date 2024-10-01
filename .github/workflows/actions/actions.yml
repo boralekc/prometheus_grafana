@@ -1,0 +1,66 @@
+name: App deploy workflow
+
+on:
+  workflow_call:
+    inputs:
+      APP_HOST:
+        required: false
+        type: string
+      APP_NAMESPACE:
+        required: false
+        type: string
+      PLAYBOOK:
+        required: false
+        type: string
+      NAME_CLUSTERISSUER:
+        required: false
+        type: string
+      CHART_PATH:
+        required: false
+        type: string
+    secrets:
+      USER_PASSWORD:
+        required: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      
+      - name: Save DigitalOcean kubeconfig with short-lived credentials
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ vars.K8S_CLUSTER_NAME }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+  
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ansible kubernetes passlib
+  
+      - name: Install kubernetes.core collection
+        run: ansible-galaxy collection install kubernetes.core community.general
+
+      - name: Check Kubernetes context
+        run: kubectl config current-context
+
+      - name: Run Ansible playbook
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: "false"
+          ANSIBLE_CONFIG: ${{ github.workspace }}/ansible
+          APP_HOST: ${{ inputs.APP_HOST }}
+          APP_NAMESPACE: ${{ inputs.APP_NAMESPACE }}
+          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+          NAME_CLUSTERISSUER: ${{ inputs.NAME_CLUSTERISSUER }}
+          CHART_PATH: ${{ github.workspace }}/${{ inputs.CHART_PATH }}
+        run: |
+          ansible-playbook -i ${{ github.workspace }}/ansible/inventory.yml ${{ github.workspace }}/ansible/playbooks/${{ inputs.PLAYBOOK }}

@@ -1,0 +1,5 @@
+kubeconfig: "{{ lookup('env', 'KUBECONFIG') }}"
+app_namespace: "{{ lookup('env', 'APP_NAMESPACE') }}"
+app_host: "{{ lookup('env', 'APP_HOST') }}"
+name_clusterissuer: "{{ lookup('env', 'NAME_CLUSTERISSUER') }}"
+chart_path: "{{ lookup('env', 'CHART_PATH') }}"
