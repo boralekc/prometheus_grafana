@@ -38,7 +38,7 @@ jobs:
         DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
   clusterissuer-prom:
-    name: "Deploy clusterissuer-grafana"
+    name: "Deploy clusterissuer-prometheus"
     needs: cert-manager
     uses: ./.github/workflows/actions.yml
     with:
