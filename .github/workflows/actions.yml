@@ -43,7 +43,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       
       - name: Save DigitalOcean kubeconfig with short-lived credentials
-        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ vars.K8S_CLUSTER_NAME }}
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ vars.K8S_CLUSTER_NAME }} --local-path kubeconfig.yml
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -70,5 +70,6 @@ jobs:
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
           NAME_CLUSTERISSUER: ${{ inputs.NAME_CLUSTERISSUER }}
           CHART_PATH: ${{ github.workspace }}/${{ inputs.CHART_PATH }}
+          KUBECONFIG: ${{ github.workspace }}/kubeconfig.yml
         run: |
           ansible-playbook -i ${{ github.workspace }}/ansible/inventory.yml ${{ github.workspace }}/ansible/playbooks/${{ inputs.PLAYBOOK }}

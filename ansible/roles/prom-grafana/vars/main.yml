@@ -1,3 +1,4 @@
+kubeconfig: "{{ lookup('env', 'KUBECONFIG') }}"
 app_namespace: "{{ lookup('env', 'APP_NAMESPACE') }}"
 app_host: "{{ lookup('env', 'APP_HOST') }}"
 user_name: "{{ lookup('env', 'USER_NAME') }}"
