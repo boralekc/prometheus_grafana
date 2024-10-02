@@ -28,8 +28,12 @@
             cert-manager.io/cluster-issuer: grafissuer
             nginx.ingress.kubernetes.io/ssl-redirect: "true"
             nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+          ingressClassName: nginx
           hosts:
             - "{{ host_grafana }}"
+          tls: 
+            hosts: 
+              - "{{ host_grafana }}"
       prometheus:
         ingress:
           enabled: true
@@ -45,6 +49,10 @@
             cert-manager.io/cluster-issuer: promissuer
             nginx.ingress.kubernetes.io/ssl-redirect: "true"
             nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+          ingressClassName: nginx
           hosts:
             - "{{ host_prom }}"
+          tls: 
+            hosts: 
+              - "{{ host_prom }}"
         state: present
