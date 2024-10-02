@@ -31,19 +31,33 @@ jobs:
     with:
         PLAYBOOK: "clusterissuer.yml"
         APP_HOST: ${{ vars.GRAFANA_HOST }}
-        APP_NAMESPACE: ${{ vars.GRAFANA_NAMESPACE }}
+        APP_NAMESPACE: ${{ vars.NAMESPACE }}
         NAME_CLUSTERISSUER: "grafissuer"
         CHART_PATH: ${{ github.workspace }}/clusterissuer
     secrets:
         DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-  grafana:
+  clusterissuer-prom:
+    name: "Deploy clusterissuer-grafana"
+    needs: cert-manager
+    uses: ./.github/workflows/actions.yml
+    with:
+        PLAYBOOK: "clusterissuer.yml"
+        APP_HOST: ${{ vars.PROM_HOST }}
+        APP_NAMESPACE: ${{ vars.NAMESPACE }}
+        NAME_CLUSTERISSUER: "promissuer"
+        CHART_PATH: ${{ github.workspace }}/clusterissuer
+    secrets:
+        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+  prom-grafana:
     name: "Deploy grafana"
     needs: clusterissuer-grafana
     uses: ./.github/workflows/actions.yml
     with:
-        APP_HOST: ${{ vars.GRAFANA_HOST }}
-        APP_NAMESPACE: ${{ vars.GRAFANA_NAMESPACE }}
+        HOST_GRAFANA: ${{ vars.GRAFANA_HOST }}
+        APP_NAMESPACE: ${{ vars.NAMESPACE }}
+        HOST_PROM: ${{ vars.PROM_HOST }}
         PLAYBOOK: "prom-grafana.yml"
     secrets:
         USER_PASSWORD: ${{ secrets.GRAFANA_PASSWORD }}

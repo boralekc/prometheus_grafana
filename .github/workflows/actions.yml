@@ -3,6 +3,12 @@ name: App deploy workflow
 on:
   workflow_call:
     inputs:
+      HOST_GRAFANA:
+        required: false
+        type: string
+      HOST_PROM:
+        required: false
+        type: string
       APP_HOST:
         required: false
         type: string
