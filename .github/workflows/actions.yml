@@ -43,7 +43,7 @@ jobs:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
       
       - name: Save DigitalOcean kubeconfig with short-lived credentials
-        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 ${{ vars.K8S_CLUSTER_NAME }} --local-path kubeconfig.yml
+        run: doctl kubernetes cluster kubeconfig save k8s-cluster --expiry-seconds 600 > kubeconfig.yml
 
       - name: Set up Python
         uses: actions/setup-python@v2
