@@ -1,7 +1,7 @@
 kubeconfig: "{{ lookup('env', 'KUBECONFIG') }}"
 app_namespace: "{{ lookup('env', 'APP_NAMESPACE') }}"
 host_grafana: "{{ lookup('env', 'HOST_GRAFANA') }}"
-host_prom: "{{ lookup('env', 'HOST_GRAFANA') }}"
+host_prom: "{{ lookup('env', 'HOST_PROM') }}"
 user_name: "{{ lookup('env', 'USER_NAME') }}"
 user_password: "{{ lookup('env', 'USER_PASSWORD') }}"
 chart_path: "{{ lookup('env', 'CHART_PATH') }}"
