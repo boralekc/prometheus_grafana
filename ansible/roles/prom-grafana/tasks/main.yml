@@ -31,9 +31,10 @@
           ingressClassName: nginx
           hosts:
             - "{{ host_grafana }}"
-          tls: 
-            hosts: 
-              - "{{ host_grafana }}"
+          tls:
+            - secretName: grafana-tls 
+              hosts: 
+                - "{{ host_grafana }}"
       prometheus:
         ingress:
           enabled: true
@@ -52,7 +53,8 @@
           ingressClassName: nginx
           hosts:
             - "{{ host_prom }}"
-          tls: 
-            hosts: 
-              - "{{ host_prom }}"
+          tls:
+            - secretName: prometheus-tls 
+              hosts: 
+                - "{{ host_prom }}"
         state: present
