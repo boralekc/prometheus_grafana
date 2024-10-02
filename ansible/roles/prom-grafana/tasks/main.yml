@@ -29,7 +29,7 @@
             nginx.ingress.kubernetes.io/ssl-redirect: "true"
             nginx.ingress.kubernetes.io/ssl-passthrough: "true"
           hosts:
-            - "{{ app_host }}"
+            - "{{ host_grafana }}"
       prometheus:
         ingress:
           enabled: true
@@ -46,5 +46,5 @@
             nginx.ingress.kubernetes.io/ssl-redirect: "true"
             nginx.ingress.kubernetes.io/ssl-passthrough: "true"
           hosts:
-            - "{{ app_host }}"
+            - "{{ host_prom }}"
         state: present

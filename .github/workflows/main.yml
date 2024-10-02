@@ -52,7 +52,7 @@ jobs:
 
   prom-grafana:
     name: "Deploy prometheus-grafana"
-    needs: clusterissuer-grafana
+    needs: [clusterissuer-grafana, clusterissuer-prom]
     uses: ./.github/workflows/actions.yml
     with:
         HOST_GRAFANA: ${{ vars.GRAFANA_HOST }}

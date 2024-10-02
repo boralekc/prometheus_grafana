@@ -65,6 +65,8 @@ jobs:
         env:
           ANSIBLE_HOST_KEY_CHECKING: "false"
           ANSIBLE_CONFIG: ${{ github.workspace }}/ansible
+          HOST_GRAFANA: ${{ inputs.HOST_GRAFANA }}
+          HOST_PROM: ${{ inputs.HOST_PROM }}
           APP_HOST: ${{ inputs.APP_HOST }}
           APP_NAMESPACE: ${{ inputs.APP_NAMESPACE }}
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
