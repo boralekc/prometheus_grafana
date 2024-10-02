@@ -1,10 +1,11 @@
+---
 - name: Add Prometheus Helm repository
-    command: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-    notify: 
-      - Update Helm repositories
+  command: helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+  notify: 
+    - Update Helm repositories
 
 - name: Update Helm repositories
-    command: helm repo update
+  command: helm repo update
 
 - name: Install
   kubernetes.core.helm:
