@@ -50,20 +50,20 @@ jobs:
     secrets:
         DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
   
-  prom-secret:
-    name: "Deploy prometheus secret"
-    needs: [clusterissuer-grafana, clusterissuer-prom]
-    uses: ./.github/workflows/secrets.yml
-    with:
-        APP_NAMESPACE: ${{ vars.NAMESPACE }}
-    secrets:
-        USER_NAME: ${{ secrets.PROM_USER }}
-        USER_PASSWORD: ${{ secrets.PROM_PASSWORD }}
-        DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+  # prom-secret:
+  #   name: "Deploy prometheus secret"
+  #   needs: [clusterissuer-grafana, clusterissuer-prom]
+  #   uses: ./.github/workflows/secrets.yml
+  #   with:
+  #       APP_NAMESPACE: ${{ vars.NAMESPACE }}
+  #   secrets:
+  #       USER_NAME: ${{ secrets.PROM_USER }}
+  #       USER_PASSWORD: ${{ secrets.PROM_PASSWORD }}
+  #       DIGITALOCEAN_ACCESS_TOKEN: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
   prom-grafana:
     name: "Deploy prometheus-grafana"
-    needs: prom-secret
+    needs: [clusterissuer-grafana, clusterissuer-prom]
     uses: ./.github/workflows/actions.yml
     with:
         HOST_GRAFANA: ${{ vars.GRAFANA_HOST }}
